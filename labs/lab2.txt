@@ -1,0 +1,24 @@
+Lab 2
+
+ORIGINAL MODEL:
+{'rouge1': 0.24089921652421653, 'rouge2': 0.11769053708439897, 'rougeL': 0.22001958689458687, 'rougeLsum': 0.22134175465057818}
+INSTRUCT MODEL:
+{'rouge1': 0.41026607717457186, 'rouge2': 0.17840645241958838, 'rougeL': 0.2977022096267017, 'rougeLsum': 0.2987374187518165}
+
+ORIGINAL MODEL:
+#Person1#: I'm thinking of upgrading my computer.
+
+
+
+Original slightly fine-tuned
+
+ORIGINAL MODEL:
+{'rouge1': 0.22403804569021957, 'rouge2': 0.08682817869415808, 'rougeL': 0.20713651213651213, 'rougeLsum': 0.20835900857639983}
+
+ORIGINAL MODEL:
+#Person1#: Have you considered upgrading your system?
+
+
+
+So, slight fine-tuning decreased the quality according to rouge metrics.
+
