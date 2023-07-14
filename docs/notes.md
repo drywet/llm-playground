@@ -52,7 +52,7 @@ sparse_categorical_crossentropy input is just an index of a category
 
 #### SGD, batch_size
 
-A smaller batch_size + more training steps can be more accurate than a bigger batch_size + fewer updates. 
+A smaller batch_size + more training steps can be more accurate than a bigger batch_size + fewer updates.
 
 There are several ways to understand why several updates is better (for the same amount of data being read). It's the
 key idea of stochastic gradient descent vs. gradient descent. Instead of reading everything and then correct yourself at
@@ -63,53 +63,67 @@ in the direction of the (exact) gradient. It's better to change direction severa
 precise.
 
 #### Misc
+
 Displaying layer activations:
+
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def plot_conv(epoch=0, batch=0, accuracy=0):
+    plt.ioff()
 
-   plt.ioff()
+    img_indices = [0, 23, 28, 900, 1500, 5000, 7000]
+    convolution_indices = [1, 5, 10, 20]
+    f, axarr = plt.subplots(len(img_indices) + len(convolution_indices) - 1, len(model.layers) + 1)
 
-   img_indices = [0, 23, 28, 900, 1500, 5000, 7000]
-   convolution_indices = [1, 5, 10, 20]
-   f, axarr = plt.subplots(len(img_indices) + len(convolution_indices) - 1, len(model.layers) + 1)
+    for ax in axarr:
+        for plot in ax:
+            plot.grid(False)
+            plot.axis('off')
 
-   for ax in axarr:
-      for plot in ax:
-         plot.grid(False)
-         plot.axis('off')
+    f.set_figheight(len(img_indices) + len(convolution_indices) - 1)
+    f.set_figwidth(len(model.layers) + 1)
 
-   f.set_figheight(len(img_indices) + len(convolution_indices) - 1)
-   f.set_figwidth(len(model.layers) + 1)
+    layer_outputs = [layer.output for layer in model.layers]
+    activation_model = tf.keras.models.Model(inputs=model.input, outputs=layer_outputs)
 
-   layer_outputs = [layer.output for layer in model.layers]
-   activation_model = tf.keras.models.Model(inputs=model.input, outputs=layer_outputs)
+    def draw_plot(plot, img):
+        plot.imshow(img, cmap='inferno')
 
-   def draw_plot(plot, img):
-      plot.imshow(img, cmap='inferno')
+    for ax, img_index in enumerate(img_indices):
+        ax_index = ax if ax == 0 else (ax + len(convolution_indices) - 1)
+        draw_plot(axarr[ax_index, 0], test_images[img_index])
+        prediction = activation_model.predict(test_images[img_index].reshape(1, 28, 28, 1), verbose="2")
+        for layer_index, _ in enumerate(model.layers):
+            if len(prediction[layer_index].shape) == 4:
+                for convolution_index_index, convolution_index in enumerate(
+                        convolution_indices[:(len(convolution_indices) if ax == 0 else 1)]):
+                    draw_plot(axarr[ax_index + convolution_index_index, layer_index + 1],
+                              prediction[layer_index][0, :, :, convolution_index])
+            else:
+                img = np.tile(prediction[layer_index][0], (len(prediction[layer_index][0]), 1))
+                draw_plot(axarr[ax_index, layer_index + 1], img)
 
-   for ax, img_index in enumerate(img_indices):
-      ax_index = ax if ax == 0 else (ax + len(convolution_indices) - 1)
-      draw_plot(axarr[ax_index, 0], test_images[img_index])
-      prediction = activation_model.predict(test_images[img_index].reshape(1, 28, 28, 1), verbose="2")
-      for layer_index, _ in enumerate(model.layers):
-         if len(prediction[layer_index].shape) == 4:
-            for convolution_index_index, convolution_index in enumerate(
-                    convolution_indices[:(len(convolution_indices) if ax == 0 else 1)]):
-               draw_plot(axarr[ax_index + convolution_index_index, layer_index + 1],
-                         prediction[layer_index][0, :, :, convolution_index])
-         else:
-            img = np.tile(prediction[layer_index][0], (len(prediction[layer_index][0]), 1))
-            draw_plot(axarr[ax_index, layer_index + 1], img)
-
-   f.suptitle(f"Epoch: {epoch:02d}, batch: {batch:04d}, accuracy: {accuracy:06.3f}", fontsize=14)
-   f.savefig(f"../../../tmp/charts/plot-{epoch:02d}-{batch:04d}.png")
-   plt.close('all')
+    f.suptitle(f"Epoch: {epoch:02d}, batch: {batch:04d}, accuracy: {accuracy:06.3f}", fontsize=14)
+    f.savefig(f"../../../tmp/charts/plot-{epoch:02d}-{batch:04d}.png")
+    plt.close('all')
 
 
 plot_conv()
+```
+
+Note: it may be useful to normalize images (code taken from the lab)
+
+```python
+for i in range(n_features):
+    x = feature_map[0, :, :, i]
+    x -= x.mean()
+    x /= x.std()
+    x *= 64
+    x += 128
+    x = np.clip(x, 0, 255).astype('uint8')
 ```
 
 TF tensor shape is `tensorflow.python.framework.tensor_shape.TensorShape`, it has .as_list() method
@@ -119,6 +133,23 @@ To reshape to unspecified batch dimension, specify -1: `test_images[img_index].r
 tensor.numpy()
 `model.predict(x)` is for batch prediction, `model(x)` is for use in loops
 ndarray.tolist()
-`prediction[layer_index][0, :, :, CONVOLUTION_NUMBER]` - here among 4 dimensions the 1st and 4th are fixed and 2nd and 3rd are left, and the result is a 2d array
+`prediction[layer_index][0, :, :, CONVOLUTION_NUMBER]` - here among 4 dimensions the 1st and 4th are fixed and 2nd and
+3rd are left, and the result is a 2d array
 numpy.expand_dims = pytorch unsqueeze:  `np.expand_dims(training_images, axis=3)` or axis=(3,4) or axis=-1
 `ndarray / 255.0` if ndarray is of shape (..., ..., ..., 1) then the last dimension is removed for some reason
+
+```
+from tf.keras.utils import load_img, img_to_array
+
+img = load_img(path, target_size=(300, 300))
+x = img_to_array(img)
+
+# Also: image_dataset_from_directory, save_img
+```
+
+tf.keras.callbacks.EarlyStopping
+tf.keras.callbacks.ModelCheckpoint
+
+
+img = mpimg.imread(img_path)
+plt.imshow(img)
