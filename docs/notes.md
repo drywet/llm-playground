@@ -173,5 +173,16 @@ dataset = dataset.batch(batch_size).prefetch(1)
 Time series:
 
 - better to split train/val according to periodicity of data
+- baseline is centered_moving_average(past) + moving_average(period - previous period)
+- a simple linear regression (Dense(1)) can do as well as the baseline
+
+TF lambda layers (not supported in HDF5 format)
+
+
+tf.expand_dims - similar to np.expand_dims
+
+Time series:
+
+- better to split train/val according to periodicity of data
 - baseline is past moving average + (period - previous period moving average)
 - a simple linear regression (Dense(1)) can do as well as the baseline
