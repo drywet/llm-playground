@@ -153,3 +153,15 @@ tf.keras.callbacks.ModelCheckpoint
 
 img = mpimg.imread(img_path)
 plt.imshow(img)
+
+dataset.padded_batch(batch_size)
+
+np.allclose Returns True if two arrays are element-wise equal within a tolerance
+
+dataset = tf.data.Dataset.from_tensor_slices(series)
+dataset = dataset.window(window_size + 1, shift=1, drop_remainder=True)
+dataset = dataset.flat_map(lambda window: window.batch(window_size + 1))
+dataset = dataset.shuffle(shuffle_buffer)
+dataset = dataset.map(lambda window: (window[:-1], window[-1]))
+dataset = dataset.batch(batch_size).prefetch(1)
+
