@@ -1,0 +1,53 @@
+ETL vs ELT   ELT is more convenient because all data is in the same data warehouse
+
+stateful vs stateless processing
+
+ingestion volume, frequency and elasticity
+
+flexibility in data schemas
+
+modularity of producers and consumers
+
+
+
+
+
+
+DataFlow Processing Job can pull from pub/sub
+
+Models need to be retrained to improve them and because data's statistical distribution changes over time
+
+ML Engineering is more important than model complexity
+
+
+
+
+Volume
+Latency
+Model residency (where to serve)
+Feature serving pipeline (what to serve)
+
+
+
+
+Business value
+Select a "northstart" metric (CTR, Conversion rate, Impressions, ...)
+Measure impact
+Calculate ROI, e.g. ROI = increased revenue - TCO (total cost of ownership)
+
+
+
+
+"Reliable machine learning" O'Reilly book
+
+
+
+KubeFlow
+
+
+
+Experiment rapidly & measure relevance
+Assure top data quality
+Make coherent tooling choices. 
+Build a data-driven culture
+
