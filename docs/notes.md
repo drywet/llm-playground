@@ -149,12 +149,17 @@ x = img_to_array(img)
 
 tf.keras.callbacks.EarlyStopping
 tf.keras.callbacks.ModelCheckpoint
-
+tf.keras.callbacks.LearningRateScheduler for finding the best stable optimizer step
 
 img = mpimg.imread(img_path)
 plt.imshow(img)
 
 dataset.padded_batch(batch_size)
+
+NLP:
+Surprisingly, even a simple Conv1D (not LSTM or transformer, etc.) can be applied to next word prediction task, although
+attention window would be limited and the order of words might be ignored
+
 
 np.allclose Returns True if two arrays are element-wise equal within a tolerance
 
@@ -165,3 +170,8 @@ dataset = dataset.shuffle(shuffle_buffer)
 dataset = dataset.map(lambda window: (window[:-1], window[-1]))
 dataset = dataset.batch(batch_size).prefetch(1)
 
+Time series:
+
+- better to split train/val according to periodicity of data
+- baseline is past moving average + (period - previous period moving average)
+- a simple linear regression (Dense(1)) can do as well as the baseline
