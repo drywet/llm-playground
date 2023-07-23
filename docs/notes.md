@@ -126,17 +126,17 @@ for i in range(n_features):
     x = np.clip(x, 0, 255).astype('uint8')
 ```
 
-TF tensor shape is `tensorflow.python.framework.tensor_shape.TensorShape`, it has .as_list() method
-NumPy shape is a tuple
-Conv2D output is of shape (batch_dimension, H, W, n_filters)
-To reshape to unspecified batch dimension, specify -1: `test_images[img_index].reshape(-1, 28, 28, 1)`
-tensor.numpy()
-`model.predict(x)` is for batch prediction, `model(x)` is for use in loops
-ndarray.tolist()
+TF tensor shape is `tensorflow.python.framework.tensor_shape.TensorShape`, it has .as_list() method  \
+NumPy shape is a tuple  \
+Conv2D output is of shape (batch_dimension, H, W, n_filters)  \
+To reshape to unspecified batch dimension, specify -1: `test_images[img_index].reshape(-1, 28, 28, 1)`  \
+tensor.numpy()  \
+`model.predict(x)` is for batch prediction, while `model(x)` can be more efficient in loops  \
+ndarray.tolist()  \
 `prediction[layer_index][0, :, :, CONVOLUTION_NUMBER]` - here among 4 dimensions the 1st and 4th are fixed and 2nd and
-3rd are left, and the result is a 2d array
-numpy.expand_dims = pytorch unsqueeze:  `np.expand_dims(training_images, axis=3)` or axis=(3,4) or axis=-1
-`ndarray / 255.0` if ndarray is of shape (..., ..., ..., 1) then the last dimension is removed for some reason
+3rd are left, and the result is a 2d array  \
+numpy.expand_dims = pytorch unsqueeze:  `np.expand_dims(training_images, axis=3)` or axis=(3,4) or axis=-1  \
+`ndarray / 255.0` if ndarray is of shape (..., ..., ..., 1) then the last dimension is removed for some reason \
 
 ```
 from tf.keras.utils import load_img, img_to_array
@@ -147,6 +147,7 @@ x = img_to_array(img)
 # Also: image_dataset_from_directory, save_img
 ```
 
+```
 tf.keras.callbacks.EarlyStopping
 tf.keras.callbacks.ModelCheckpoint
 tf.keras.callbacks.LearningRateScheduler for finding the best stable optimizer step
@@ -155,20 +156,22 @@ img = mpimg.imread(img_path)
 plt.imshow(img)
 
 dataset.padded_batch(batch_size)
+```
 
-NLP:
+NLP:  \
 Surprisingly, even a simple Conv1D (not LSTM or transformer, etc.) can be applied to next word prediction task, although
 attention window would be limited and the order of words might be ignored
 
-
 np.allclose Returns True if two arrays are element-wise equal within a tolerance
 
+```
 dataset = tf.data.Dataset.from_tensor_slices(series)
 dataset = dataset.window(window_size + 1, shift=1, drop_remainder=True)
 dataset = dataset.flat_map(lambda window: window.batch(window_size + 1))
 dataset = dataset.shuffle(shuffle_buffer)
 dataset = dataset.map(lambda window: (window[:-1], window[-1]))
 dataset = dataset.batch(batch_size).prefetch(1)
+```
 
 Time series:
 
@@ -177,7 +180,6 @@ Time series:
 - a simple linear regression (Dense(1)) can do as well as the baseline
 
 TF lambda layers (not supported in HDF5 format)
-
 
 tf.expand_dims - similar to np.expand_dims
 
