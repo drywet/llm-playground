@@ -1,0 +1,19 @@
+Nano-GPT code
+    -- video
+LLAMAv2 paper / code / llama2.c
+RetNet paper
+    long context LLM extensions
+ViT
+    How do multimodal transformers work?
+    CLIP / CoCa / BLIP
+    Stable diffusion
+~~ WaveNet paper
+    experiments
+Google's RT-2 paper
+Kalman / particle filters
+
+RL course
+Spark course
+
+
+Website posts about courses
