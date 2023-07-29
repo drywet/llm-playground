@@ -5,7 +5,7 @@ RetNet paper
     long context LLM extensions
 ViT
     How do multimodal transformers work?
-    CLIP / CoCa / BLIP
+    CLIP / CoCa / BLIP2
     Stable diffusion
 ~~ WaveNet paper
     experiments
@@ -15,5 +15,6 @@ Kalman / particle filters
 RL course
 Spark course
 
-
 Website posts about courses
+
+LeetCode hard tasks in Scala 3.3
