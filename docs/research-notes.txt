@@ -1,0 +1,36 @@
+LARGER LANGUAGE MODELS DO IN-CONTEXT LEARNING DIFFERENTLY https://arxiv.org/pdf/2303.03846.pdf
+    Large models support overridden labels in context, and also semantically-unrelated labels given in context
+    Although instruction tuning improves the ability to learn input–label mappings, it concurrently strengthens the usage of semantic priors, similar to the findings
+
+ViT - Split an image into 16x16 patches/words. Flatten and linearly embed each patch, add positional embedding to each projection. Feed to a transformer as a sequence. After the transformer, apply a classifying MLP
+
+Scaling context window
+    RetNet
+        training: ordinary parallel attention or chunkwise attention (parallel within a chunk, recursive across chunks)
+        inference: recursive attention
+        parallel is O(n^2), recursive is O(n)
+        TODO: Check code: https://github.com/microsoft/torchscale/blob/main/examples/fairseq/models/retnet.py
+    Scaling transformers to 1M tokens and beyond with RMT
+        BPTT for an RNN of a transformer. Long input is split into segments. It adds extra "memory" input and output tokens that are passed across iterations with further segments.
+        Can turn any (encoder, or even decoder) transformer into an RNN to extend context window thanks to the extra state
+        TODO: Check LSTM BPTT implementation in Tensorflow
+
+Rotational embeddings
+    Applies complex numbers in polar coordinates in exponential form to specify embedding per token.
+    R*e^(i*θ*...) where R matrix is learned and θ is an angle calculated as a function of token index: 10000^...
+    Euler's formula: e^iθ = cos(θ) + i*sin(θ)
+    Note: due to polar-to-rectangular coordinates transformation a naive implementation is slow; it requires some optimisations
+
+    xPos embeddings are a modification that can "extrapolate" with a goal of extending context window after pre-training.
+    A more reliable alternative to extrapolation is interpolation, this helps to fine-tune a model to increase context window after pre-training:
+        EXTENDING CONTEXT WINDOW OF LARGE LANGUAGE MODELS VIA POSITION INTERPOLATION https://arxiv.org/pdf/2306.15595.pdf
+        Up to 32x context window extension
+        Requires 10000-100000 steps of fine-tuning
+        How are weights computed for the new tokens? Are weight matrices interpolated too?
+
+Flash attention
+    - Eliminates excess data R/W between HBM and SRAM
+    - Splits attention matrix (S=Q*K_T, O=S*V) and softmax computation into a few steps reusing previous steps' results to make it linear with respect to token number
+    - Drawbacks: quadratic w.r.t. model dimension and needs attention re-computation during backprop
+
+RLHF training requires much more GPU memory than just model training? Like, 80 gb vs 500 gb? But, anyway, PEFT/LoRA improves that

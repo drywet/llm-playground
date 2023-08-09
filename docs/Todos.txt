@@ -1,16 +1,40 @@
 Nano-GPT code
     -- video
-LLAMAv2 paper / code / llama2.c
-RetNet paper
+LLAMAv2 paper / code / llama2.c - what param count does it support?
+-- RetNet paper
+    code
     long context LLM extensions
-ViT
-    How do multimodal transformers work?
-    CLIP / CoCa / BLIP2
+Flash Attention
+
+PanGu-Coder2 https://arxiv.org/pdf/2307.14936.pdf
+
+More transformer variations: https://huggingface.co/docs/transformers/main/model_doc/mobilevitv2
+
+-- ViT
     Stable diffusion
+    MobileViTV2
+    How do multimodal transformers work?
+    -- CLIP
+    CoCa
+    BLIP2
+    Structure and Content-Guided Video Synthesis with Diffusion Models https://arxiv.org/pdf/2302.03011.pdf
 ~~ WaveNet paper
     experiments
 Google's RT-2 paper
 Kalman / particle filters
+NeRF
+
+LLM course extras
+    RLHF / Training language models to follow instructions with human feedback https://lnkd.in/ez9FcAba
+    PPO / Proximal Policy Optimization Algorithms https://lnkd.in/ehXC4_uR
+    DPO / Direct Preference Optimization: Your Language Model is Secretly a Reward Model https://lnkd.in/e6A6RAhV
+    -- RLAIF / Constitutional AI: Harmlessness from AI Feedback https://lnkd.in/ewvH7msN
+
+    PAL: Program-aided Language Models https://lnkd.in/eh7QYhsE
+    ReAct: Synergizing Reasoning and Acting in Language Models https://lnkd.in/e63Fq32E
+    RAG / Retrieval-Augmented Generation https://lnkd.in/eSjWZHhx https://lnkd.in/ehccj3Vn
+
+    HF PPOTrainer code
 
 RL course
 Spark course
@@ -18,3 +42,5 @@ Spark course
 Website posts about courses
 
 LeetCode hard tasks in Scala 3.3
+
+https://huggingface.co/papers

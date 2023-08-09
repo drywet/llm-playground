@@ -1,0 +1,7 @@
+PanGu-Coder2 + RetNet + language-fine-tuned + grammar-constrained generation = longer context?
+    Better AI code assistant that helps to write unit-tests attending to lots of project files
+
+Can existing transformer weights be applied to RetNet?
+
+Fine-tune FB's text-to-music model on a synthesizer to check if it can replicate it
+
