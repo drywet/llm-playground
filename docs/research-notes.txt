@@ -1,8 +1,8 @@
+ViT - Split an image into 16x16 patches/words. Flatten and linearly embed each patch, add positional embedding to each projection. Feed to a transformer as a sequence. After the transformer, apply a classifying MLP
+
 LARGER LANGUAGE MODELS DO IN-CONTEXT LEARNING DIFFERENTLY https://arxiv.org/pdf/2303.03846.pdf
     Large models support overridden labels in context, and also semantically-unrelated labels given in context
     Although instruction tuning improves the ability to learn input–label mappings, it concurrently strengthens the usage of semantic priors, similar to the findings
-
-ViT - Split an image into 16x16 patches/words. Flatten and linearly embed each patch, add positional embedding to each projection. Feed to a transformer as a sequence. After the transformer, apply a classifying MLP
 
 Scaling context window
     RetNet
@@ -34,3 +34,8 @@ Flash attention
     - Drawbacks: quadratic w.r.t. model dimension and needs attention re-computation during backprop
 
 RLHF training requires much more GPU memory than just model training? Like, 80 gb vs 500 gb? But, anyway, PEFT/LoRA improves that
+
+Transformer can be better than XGBoost - there is a paper where they replace Q*K_T with K*K_T, etc.
+
+In a diffusion model, they replaced a UNet CNN with a transformer: https://arxiv.org/pdf/2212.09748.pdf
+
