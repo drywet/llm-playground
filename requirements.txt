@@ -1,0 +1,14 @@
+tensorflow
+scikit-learn
+pandas
+matplotlib
+seaborn
+
+graphviz
+pydot
+pydotplus
+
+altair
+
+gymnasium
+gymnasium[box2d]
