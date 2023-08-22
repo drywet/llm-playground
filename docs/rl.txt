@@ -1,0 +1,83 @@
+choosing not the max action but any, according to values
+
+metric slightly rewarding for proximity to the landing pad
+decreasing epsilon over time to allow stabilization after landing
+biasing sampling towards more/less rewarding
+	not storing repetitive samples
+
+MCTS with fewer steps (every 10th, 50th)
+	
+
+LLM integration
+
+---
+
+Ideas:
+	For LunarLander, a sequence of observations matters, or at least a "time" dimension in an observation. This is because when the ship stabilizes it gets an extra reward. Stabilization depends on time, but an individual observation provided by env by default doesn't reflect it.
+
+	If observations and rewards are also predicted per-action, it's interesting to compare metrics of state prediction, action value prediction, reward prediction.
+
+	RL solutions shoud be able to come up with decision trees internally, or act like such, figuring out boundaries
+		https://arxiv.org/pdf/2012.07723v3.pdf
+		https://gitlab.com/leocus/ge_q_dts
+
+	A mixture of DQN improvements
+		https://arxiv.org/pdf/1710.02298.pdf
+
+
+	Humans learning can:
+		model env with enough details and use it for predictions and learning
+			focus on important aspects
+		control learning rate depending on situation: for example, for interesting experiences
+			choosing interesting experiences based on prediction error / with a separate neural network
+		learn on-policy, off-policy, with a model
+		control and plan exploration
+		plan
+		recognize important and interesting places and plan to reach them
+		reuse knowledge for other envs
+		apply high-level knowledge
+		invent tools
+		structure knowledge and explain it
+
+
+
+
+
+
+Read about:
+	softmax in DQN can provide exploration, but depending on an environment and received action values, the resulting sampling may be closer to random or closer to greedy.
+
+	New research is focused on larger tasks that require more complex methods
+
+	Improvements to DQN: https://arxiv.org/pdf/1710.02298.pdf
+
+    Model-free
+        DQN - has a lot of variations: double DQN, prioritized replay DQN, distributional DQN, multistep (A3C)
+        A2C - basic algorithm, but lots of tricks are available (check DreamerV3)
+	    PPO
+	        on-policy, but can run parallel simulations to be faster, however, not the most efficient
+	        Not SotA anymore, but relatively simple
+	    TD3/SAC are SotA, but are basic. DDPG-based
+
+    SotA generic algos
+        Model-based algorithms
+            DreamerV3, IRIS (transformer-based)
+                Based on A2C with tricks
+                Solves Minecraft diamond search after 14 days, but with 100x eased block collection
+                Still not the best score on Montezuma's revenge
+        GDI - can be much better than DreamedV3 in some games; no code available, only pseudocode
+        EfficientNet/MuZero - MCTS + restart
+    AlphaStar - lots of tricks, focused on StartCraft
+    Exploration-focused
+        Go-Explore - solves Montezuma's Revenge; it restarts from a point in order to explore. It's interesting what it decides to explore
+        PEG
+    Algos that combine RL with LLM to associate actions with text and then follow text commands
+        Learning to Model the World with Language: https://arxiv.org/pdf/2308.01399.pdf
+        RT-2 - LLM that can output vectors for robotic movement
+        Writing code: https://arxiv.org/pdf/2209.07753.pdf
+    Non-linear control
+        Solving simpler problems quickly with math
+            Idea: an agent could be trained to explore a bit and then find close-to-optimal solutions to some problems,
+            by coming up with equations and solving them;
+            or coming up with decision trees; or using A* / ant colony algorithm / classic graph algos
+

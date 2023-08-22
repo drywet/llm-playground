@@ -1,4 +1,5 @@
 tensorflow
+numpy
 scikit-learn
 pandas
 matplotlib
@@ -12,3 +13,6 @@ altair
 
 gymnasium
 gymnasium[box2d]
+more-itertools
+
+stable-baselines3[extra]

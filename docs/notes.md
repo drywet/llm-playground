@@ -47,8 +47,9 @@ When we use embedding layer, it is generally to reduce one-hot input vectors (sp
 
 #### Metrics
 
-categorical_crossentropy input is one-hot vector
-sparse_categorical_crossentropy input is just an index of a category
+categorical_crossentropy y_true is one-hot vector or maybe a softmax vector
+sparse_categorical_crossentropy y_true is just an index of a category
+y_pred softmax vector, unless from_logits is set
 
 #### SGD, batch_size
 

@@ -33,6 +33,14 @@ Flash attention
     - Splits attention matrix (S=Q*K_T, O=S*V) and softmax computation into a few steps reusing previous steps' results to make it linear with respect to token number
     - Drawbacks: quadratic w.r.t. model dimension and needs attention re-computation during backprop
 
+Modern transformers:
+    have positional embeddings added in each block, rather than just once before the first block
+        positional embeddings are relative (rotary / xPos)
+    move LayerNorm before each submodule
+    recently, FastViT showed that recurrent connections can be replaced with a "mixer" layer
+
+
+
 RLHF training requires much more GPU memory than just model training? Like, 80 gb vs 500 gb? But, anyway, PEFT/LoRA improves that
 
 Transformer can be better than XGBoost - there is a paper where they replace Q*K_T with K*K_T, etc.
