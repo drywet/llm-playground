@@ -16,3 +16,7 @@ gymnasium[box2d]
 more-itertools
 
 stable-baselines3[extra]
+
+datasets
+transformers
+torch
